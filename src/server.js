@@ -3,7 +3,8 @@ const app=express();
 const env=require('dotenv')
 const bodyParser=require('body-parser')
 const mongoose = require('mongoose');
-const userRoute=require('./routes/user')
+const authRoute=require('./routes/auth')
+const adminAuthRoute=require('./routes/admin/auth')
 
 env.config();
 app.use(bodyParser());
@@ -19,10 +20,11 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO
          })
 
 //Routes
-app.use('/api/user',userRoute)
+app.use('/api/user',authRoute)
+app.use('api/admin',adminAuthRoute)
 
 app.get('/api',(req,res)=>{
-    res.send("Homr Route works successfully")
+    res.send("Home Route works successfully")
 })
 
 
