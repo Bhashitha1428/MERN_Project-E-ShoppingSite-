@@ -6,6 +6,16 @@ const mongoose = require('mongoose');
 const authRoute=require('./routes/auth')
 const adminAuthRoute=require('./routes/admin/auth')
 
+
+const morgan=require('morgan');
+
+//Third party middleware
+if(app.get('env')=='development'){
+    app.use(morgan('tiny'));
+    console.log('Morgan enabled')
+}
+
+
 env.config();
 app.use(bodyParser());
 
