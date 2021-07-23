@@ -9,13 +9,14 @@ exports.signup=async(req,res)=>{
 
     if(user){return res.status(400).json({msg:'User already registered'})}
 
-    const {firstName, lastName,email,password }=req.body
+    const {firstName, lastName,email,password,role }=req.body
     
     const _user=new User({
         firstName,
         lastName,
         email,
         password,
+        role,
         userName:Math.random().toString()
     })
 
@@ -51,7 +52,7 @@ exports.signin=(req,res)=>{
             
             if(user.authenticate(req.body.password)){
               try{
-                     const token=jwt.sign({_id:user._id},process.env.JWT_TOKEN_SECRET,{ expiresIn: '4h' })
+                     const token=jwt.sign({_id:user._id,role:user.role},process.env.JWT_TOKEN_SECRET,{ expiresIn: '4h' })
 
                     const {_id,firstName,lastName,role,fullName}=user
 
@@ -81,15 +82,3 @@ exports.signin=(req,res)=>{
 
 }
 
-exports.checkValidUser=(req,res,next)=>{
-    const token=req.headers.authorization.split(" ")[1];
-    if(!token) return res.status(400).json({msg:"Authorization failed"})
-    const user=jwt.verify(token,process.env.JWT_TOKEN_SECRET)
-    if(user.role!='user'){
-       return res.status(400).json({
-            msg:"U are not authorized user"
-        })
-    }
-    next()
-
-}

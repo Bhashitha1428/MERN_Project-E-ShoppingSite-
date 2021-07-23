@@ -5,6 +5,7 @@ const bodyParser=require('body-parser')
 const mongoose = require('mongoose');
 const authRoute=require('./routes/auth')
 const adminAuthRoute=require('./routes/admin/auth')
+const categoryRoute=require('./routes/category')
 
 
 const morgan=require('morgan');
@@ -31,7 +32,8 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO
 
 //Routes
 app.use('/api/user',authRoute)
-app.use('api/admin',adminAuthRoute)
+app.use('/api/admin',adminAuthRoute)
+app.use('/api/category',categoryRoute)
 
 app.get('/api',(req,res)=>{
     res.send("Home Route works successfully")

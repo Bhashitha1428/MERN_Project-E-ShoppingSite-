@@ -81,16 +81,3 @@ exports.signin=(req,res)=>{
 
 }
 
-exports.checkAdminUser=(req,res,next)=>{
-
-    const token=req.headers.authorization.split(" ")[1];
-    if(!token) return res.status(400).json({msg:"Authorization failed"})
-    const user=jwt.verify(token,process.env.JWT_TOKEN_SECRET)
-    if(user.role!='admin'){
-       return res.status(400).json({
-            msg:"U are not authorized admin user"
-        })
-    }
-    next()
-
-}
