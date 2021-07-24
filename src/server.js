@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const authRoute=require('./routes/auth')
 const adminAuthRoute=require('./routes/admin/auth')
 const categoryRoute=require('./routes/category')
+const productRoute=require('./routes/product')
 
 
 const morgan=require('morgan');
@@ -34,6 +35,7 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO
 app.use('/api/user',authRoute)
 app.use('/api/admin',adminAuthRoute)
 app.use('/api/category',categoryRoute)
+app.use('/api/product',productRoute)
 
 app.get('/api',(req,res)=>{
     res.send("Home Route works successfully")
