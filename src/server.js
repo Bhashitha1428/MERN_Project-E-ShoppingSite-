@@ -9,6 +9,8 @@ const categoryRoute=require('./routes/category')
 const productRoute=require('./routes/product')
 const cartRoute=require('./routes/cart')
 
+const path=require('path')
+const cors=require('cors')
 
 const morgan=require('morgan');
 
@@ -32,7 +34,11 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO
              console.log('Database connection fail '+ err)
          })
 
+
+app.use(cors())
 //Routes
+app.use('/public',express.static(path.join(__dirname,'uploads')))
+
 app.use('/api/user',authRoute)
 app.use('/api/admin',adminAuthRoute)
 app.use('/api/category',categoryRoute)

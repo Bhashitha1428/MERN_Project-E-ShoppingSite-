@@ -4,10 +4,17 @@ const Category = require('../models/category')
 
 exports.createCategory=async (req, res) => {
 
+    
+
     const categoryObj = {
         name: req.body.name,
         slug: slugify(req.body.name)
     }
+
+   if(req.file){
+       categoryObj.categortImg=process.env.API+'/'+req.file.filename
+
+   }
 
     if (req.body.parentId) {
         categoryObj.parentId = req.body.parentId
